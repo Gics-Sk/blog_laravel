@@ -6,11 +6,13 @@
         <title>@yield('title')</title>
     </head>
     <body>
-        <h1>Laravel 101</h1>
+        <h1>BLOG</h1>
         <a href="/contact-us">Contactez-nous</a>
         <a href="/about">A propos de nous</a>
-        <a href="/articles">Articles</a>
-
+<a href="/articles">Articles</a>
+<a href="/articles/create">Creer un article</a>
         @yield('content')
+        @include('messages.success')
+
     </body>
 </html>
