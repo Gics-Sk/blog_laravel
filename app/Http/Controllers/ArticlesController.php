@@ -8,6 +8,10 @@ use App\Models\User;
 
 class ArticlesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show');
+    }
     public function index()
     {
         $articles = Article::orderBy("created_at", "desc")->paginate(10);
@@ -25,10 +29,12 @@ class ArticlesController extends Controller
     }
     public function create()
     {
+        $this->authorize('create', Article::class);
         return view('articles.create');
     }
     public function store(Request $request)
     {
+        $this->authorize('create', Article::class);
         // vérification des permissions plus tard
         $user = User::find(1);
         $request['user_id'] = $user->id;
@@ -44,17 +50,20 @@ class ArticlesController extends Controller
     }
     public function edit(Article $article)
     {
+        $this->authorize('update', $article);
         return view('articles.edit', compact('article'));
     }
 
     public function update(Request $request, Article $article)
-{
-    // dd($article, $request->all());
-    $article->update($request->all());
-}
-public function delete(Article $article)
-{
-    // vérification des permissions plus tard
-    $article->delete();
-}
+    {
+        $this->authorize('update', $article);
+        // dd($article, $request->all());
+        $article->update($request->all());
+    }
+    public function delete(Article $article)
+    {
+        $this->authorize('delete', $article);
+        // vérification des permissions plus tard
+        $article->delete();
+    }
 }

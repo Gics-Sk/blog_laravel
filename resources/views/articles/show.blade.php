@@ -1,5 +1,10 @@
 
 @extends('layouts.master')
+@section('title')
+@section('title')
+Articles
+@endsection
+@endsection
 @section('content')
 @foreach($article->comments as $comment)
     <p><strong>{{ $comment->user->name }}</strong> a réagi :</p>
